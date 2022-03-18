@@ -50,8 +50,6 @@ class CrearTablaProducto extends Migration
      */
     public function down()
     {
-        Schema::table('producto', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('producto');
     }
 }

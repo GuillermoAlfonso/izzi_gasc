@@ -35,8 +35,6 @@ class CrearTablaSesion extends Migration
      */
     public function down()
     {
-        Schema::table('sesion', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('sesion');
     }
 }

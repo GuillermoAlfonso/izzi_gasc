@@ -16,7 +16,13 @@ class Producto extends Model
         'sucursal_id',
         'precio',
         'fecha_compra',
+        'comentarios',
+        'estado'
     ];
+
+    protected $casts = [
+        'fecha_compra' => 'datetime:YYYY-mm-dd',
+      ];
 
     //Relación de muchos a uno
     public function getCategoria()

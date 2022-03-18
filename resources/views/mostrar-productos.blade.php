@@ -1,20 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Lista de productos') }}
         </h2>
     </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    Mostrar productos
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -51,7 +41,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody class="bg-white divide-y divide-gray-200 divide-solid">
+                            <tbody class="bg-white divide-y divide-gray-200 divide-solid">                                
                                 @foreach ($productos as $producto)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
@@ -64,12 +54,13 @@
                                             {{ $producto->getCategoria->nombre_categoria ?? 'None' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $producto->getSucursal->nombre_sucursal ?? 'None'}}
+                                            {{ $producto->getSucursal->nombre_sucursal ?? 'None' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <div class="flex items-center justify-end mt-4">
                                                 <form method="POST" action="{{ route('eliminar_producto') }}">
-                                                    <x-button name="boton" class="ml-4" value="{{ $producto->id }}">
+                                                    <x-button name="boton" class="ml-4"
+                                                        value="{{ $producto->id }}">
                                                         @csrf
                                                         {{ __('Eliminar') }}
                                                     </x-button>
@@ -78,7 +69,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <div class="flex items-center justify-end mt-4">
-                                                <form method="POST" action="{{ route('editar_producto') }}">
+                                                <form method="GET" action="{{ route('editar_producto') }}">
                                                     @csrf
                                                     <x-button name="boton" class="ml-4"
                                                         value="{{ $producto->id }}">

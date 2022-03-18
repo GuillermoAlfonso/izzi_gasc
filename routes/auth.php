@@ -65,7 +65,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('eliminar_producto', [Controller::class, 'destroy'])
         ->name('eliminar_producto');
-
-    Route::post('editar_producto', [Controller::class, 'edit'])
+    
+    Route::get('editar_producto', [Controller::class, 'edit'])
         ->name('editar_producto');
+        
+    Route::post('form-editar-producto', [Controller::class, 'editForm'])
+    ->name('form-editar-producto');
+        
 });

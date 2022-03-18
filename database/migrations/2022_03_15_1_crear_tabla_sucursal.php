@@ -29,8 +29,6 @@ class CrearTablaSucursal extends Migration
      */
     public function down()
     {
-        Schema::table('sucursal', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('sucursal');
     }
 }

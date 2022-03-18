@@ -29,8 +29,6 @@ class CrearTablaPerfil extends Migration
      */
     public function down()
     {
-        Schema::table('perfil', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('perfil');
     }
 }

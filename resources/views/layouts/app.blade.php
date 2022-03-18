@@ -33,4 +33,6 @@
             </main>
         </div>
     </body>
+    @include('layouts.footer-guest')
+
 </html>

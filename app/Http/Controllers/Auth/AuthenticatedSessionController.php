@@ -32,6 +32,10 @@ class AuthenticatedSessionController extends Controller
 
     public function authenticate(Request $request)
     {
+        $request->validate([            
+            'usuario' => ['required', 'max:12'],
+            'contrasena' => ['required', 'max:15', 'min:11'],            
+       ]);
 
         $attempt = Auth::attempt([
             'usuario' => $request->usuario,            
