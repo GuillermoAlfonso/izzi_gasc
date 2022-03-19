@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sesion;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -49,10 +50,15 @@ class RegisteredUserController extends Controller
             'contrasena' => Hash::make($request->password),
             'perfil_id' => $request->radio
         ]);
-
+                
         event(new Registered($user));
 
         Auth::login($user);
+
+        Sesion::create([
+            'fecha_sesion' => now(),
+            'usuario_id' => Auth::user()->id,
+        ]);
 
         Session::put('usuario', Auth::user()->usuario);
         Session::put('perfil', Auth::user()->perfil_id);
