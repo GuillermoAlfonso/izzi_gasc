@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Sesion;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,26 +36,41 @@ class AuthenticatedSessionController extends Controller
 
     public function authenticate(Request $request)
     {
-        $request->validate([            
+        $request->validate([
             'usuario' => ['required', 'max:12'],
-            'contrasena' => ['required', 'max:15', 'min:11'],            
-       ]);
+            'contrasena' => ['required', 'max:15', 'min:11'],
+        ]);
 
         $attempt = Auth::attempt([
-            'usuario' => $request->usuario,            
+            'usuario' => $request->usuario,
             'contrasena' => $request->contrasena,
             'acceso' => 1
         ]);
 
         if ($attempt) {
-            $request->session()->regenerate();
+            try {
+                Sesion::create([
+                    'fecha_sesion' => now(),
+                    'usuario_id' => Auth::user()->id,
+                ]);
 
-            return redirect(RouteServiceProvider::HOME);
+                $request->session()->regenerate();
+                
+                Session::put('usuario', Auth::user()->usuario);
+                Session::put('perfil', Auth::user()->perfil_id);
+
+                return redirect(RouteServiceProvider::HOME);
+                
+            } catch (\Throwable $th) {
+                return back()->withErrors([
+                    'error' => 'Error al iniciar sesión',
+                ]);
+            }
+        } else {
+            return back()->withErrors([
+                'error' => 'Nombre de usuario y/o contraseña incorrectos',
+            ]);
         }
-        
-        return back()->withErrors([
-            'error' => 'Nombre de usuario y/o contraseña incorrectos',
-        ]);
     }
 
 
@@ -69,6 +88,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/'); 
+        return redirect('/');
     }
 }

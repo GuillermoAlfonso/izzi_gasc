@@ -9,6 +9,14 @@ class Sesion extends Model
 {
     protected $table = 'sesion';
 
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'fecha_sesion',
+        'usuario_id',
+    ];
+
     //Relación de muchos a uno
     public function getUsuario()
     {

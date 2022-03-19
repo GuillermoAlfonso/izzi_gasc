@@ -9,6 +9,11 @@ class Perfil extends Model
 {
     protected $table = 'perfil';
 
+    protected $fillable = [
+        'id',
+        'nombre_perfil',        
+    ];
+
     //Relación de uno a muchos 
     public function getUsuarios()
     {

@@ -20,7 +20,8 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'authenticate']);
+    Route::post('login', [AuthenticatedSessionController::class, 'authenticate'])
+        ->name('login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -65,11 +66,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('eliminar_producto', [Controller::class, 'destroy'])
         ->name('eliminar_producto');
-    
+
     Route::get('editar_producto', [Controller::class, 'edit'])
         ->name('editar_producto');
-        
+
     Route::post('form-editar-producto', [Controller::class, 'editForm'])
-    ->name('form-editar-producto');
-        
+        ->name('form-editar-producto');
+
+    Route::get('generar-reportes', [Controller::class, 'createReportes'])
+        ->name('generar-reportes');
+
+    Route::post('generar_reporte', [Controller::class, 'generarReportes'])
+        ->name('generar_reporte');
+
+    Route::post('descarga_bd', [Controller::class, 'descargaMasiva'])
+        ->name('descarga_bd');
 });

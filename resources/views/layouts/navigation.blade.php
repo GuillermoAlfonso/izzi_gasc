@@ -10,22 +10,28 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+                <!-- Navigation Links -->    
+                @if (Session::get('perfil') == 3 || Session::get('perfil') == 1 )
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('registrar_producto')" :active="request()->routeIs('registrar_producto')">
-                        {{ __('Registrar producto') }}
+                        {{ __('Registrar producto') }} 
                     </x-nav-link>
-                </div>
+                </div>  
+                @endif                        
+                @if (Session::get('perfil') == 3 || Session::get('perfil') == 2 )
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('mostrar-productos')" :active="request()->routeIs('mostrar-productos')">
-                        {{ __('Mostrar productos') }}
+                        {{ __('Bandeja') }}
                     </x-nav-link>
                 </div>
+                @endif                        
+                @if (Session::get('perfil') == 3)
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('generar-reportes')" :active="request()->routeIs('generar-reportes')">
+                        {{ __('Reportes') }}
+                    </x-nav-link>
+                </div>
+                @endif                        
             </div>
 
             <!-- Settings Dropdown -->
@@ -33,7 +39,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{Session::get('usuario')}} </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -51,7 +57,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Cerrar sesión') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -80,10 +86,10 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
+            {{-- <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+            </div> --}}
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
@@ -93,7 +99,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Cerrar sesión') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
