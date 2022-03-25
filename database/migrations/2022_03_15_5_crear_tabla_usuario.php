@@ -14,24 +14,16 @@ class CrearTablaUsuario extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE TABLE IF NOT EXISTS `izzi_gasc`.`usuario` (
-            `id` INT NOT NULL AUTO_INCREMENT,
-            `usuario` VARCHAR(12) NOT NULL,
-            `contrasena` VARCHAR(255) NOT NULL,
-            `nombre` VARCHAR(45) NULL,
-            `apellido_paterno` VARCHAR(45) NULL,
-            `apellido_materno` VARCHAR(45) NULL,
-            `acceso` INT NOT NULL DEFAULT 1,
-            `perfil_id` INT NOT NULL,
-            PRIMARY KEY (`id`),
-            INDEX `fk_usuario_perfil_idx` (`perfil_id` ASC) VISIBLE,
-            UNIQUE INDEX `usuario_UNIQUE` (`usuario` ASC) VISIBLE,
-            CONSTRAINT `fk_usuario_perfil`
-              FOREIGN KEY (`perfil_id`)
-              REFERENCES `izzi_gasc`.`perfil` (`id`)
-              ON DELETE NO ACTION
-              ON UPDATE NO ACTION)
-          ENGINE = InnoDB;");
+        Schema::create('usuario', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('usuario')->unique();
+            $table->string('contrasena');
+            $table->string('nombre')->nullable();
+            $table->string('apellido_paterno')->nullable();
+            $table->string('apellido_materno')->nullable();
+            $table->integer('acceso')->default(1);
+            $table->foreignId('perfil_id')->constrained('perfil');                     
+        });
     }
 
     /**

@@ -14,12 +14,10 @@ class CrearTablaCategoria extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE TABLE IF NOT EXISTS `izzi_gasc`.`categoria` (
-            `id` INT NOT NULL AUTO_INCREMENT,
-            `nombre_categoria` VARCHAR(45) NOT NULL,
-            PRIMARY KEY (`id`),
-            UNIQUE INDEX `nombre_categoria_UNIQUE` (`nombre_categoria` ASC) VISIBLE)
-          ENGINE = InnoDB;");
+        Schema::create('categoria', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nombre_categoria')->unique();            
+        });
     }
 
     /**

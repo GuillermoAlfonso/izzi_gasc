@@ -14,12 +14,10 @@ class CrearTablaSucursal extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE TABLE IF NOT EXISTS `izzi_gasc`.`sucursal` (
-            `id` INT NOT NULL AUTO_INCREMENT,
-            `nombre_sucursal` VARCHAR(45) NOT NULL,
-            PRIMARY KEY (`id`),
-            UNIQUE INDEX `nombre_sucursal_UNIQUE` (`nombre_sucursal` ASC) VISIBLE)
-          ENGINE = InnoDB;");
+        Schema::create('sucursal', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nombre_sucursal')->unique();            
+        });
     }
 
     /**

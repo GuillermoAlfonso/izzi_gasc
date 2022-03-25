@@ -14,18 +14,11 @@ class CrearTablaSesion extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE TABLE IF NOT EXISTS `izzi_gasc`.`sesion` (
-            `id` INT NOT NULL AUTO_INCREMENT,
-            `fecha_sesion` DATETIME NOT NULL DEFAULT NOW(),
-            `usuario_id` INT NOT NULL,
-            PRIMARY KEY (`id`),
-            INDEX `fk_sesion_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-            CONSTRAINT `fk_sesion_usuario1`
-              FOREIGN KEY (`usuario_id`)
-              REFERENCES `izzi_gasc`.`usuario` (`id`)
-              ON DELETE NO ACTION
-              ON UPDATE NO ACTION)
-          ENGINE = InnoDB;");
+        Schema::create('sesion', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->dateTime('fecha_sesion')->unique();
+            $table->foreignId('usuario_id')->constrained('usuario');      
+        });
     }
 
     /**
